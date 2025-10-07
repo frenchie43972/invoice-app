@@ -1,28 +1,33 @@
-<script setup></script>
+<script setup>
+import { useInvoiceStore } from './stores/invoiceStore';
+
+const store = useInvoiceStore();
+
+function addTestInvoice() {
+  store.addInvoice({
+    client: 'New Client',
+    amount: 500,
+    dueDate: '2025-10-25',
+    status: 'Unpaid',
+  });
+}
+</script>
 
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <h1>Welcome, Everyting is Fine!</h1>
+    <button @click="addTestInvoice">Add test Invoice</button>
+    <ul>
+      <li v-for="invoice in store.invoices" :key="invoice.id">
+        <strong>{{ invoice.client }}</strong> - ${{ invoice.amount }} -
+        {{ invoice.status }}
+        <button @click="store.markAsPaid(invoice.id)">Mark Paid</button>
+        <button @click="store.removeInvoice(invoice.id)">Remove</button>
+      </li>
+    </ul>
+
+    <p>Total Invoics: {{ store.totalInvoices }}</p>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<style scoped></style>

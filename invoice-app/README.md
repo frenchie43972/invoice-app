@@ -5,19 +5,48 @@ Built with **Vue 3**, **Pinia**, **Express**, and **SQLite**, it focuses on clar
 
 ---
 
-## 🧭 Project Tracker
+## 🧭 Project Tracker (Active)
 
-### 📁 Overview
+### ✅ Completed
 
-**Goal:** Build a full-stack invoicing tool that lets users:
+| Area                   | Status | Notes                                                               |
+| ---------------------- | ------ | ------------------------------------------------------------------- |
+| Project Initialization | ✔      | Vue 3 + Vite app scaffolded                                         |
+| State Management Setup | ✔      | Pinia initialized and configured with `pinia-plugin-persistedstate` |
+| Invoice Store          | ✔      | Created `invoiceStore.js` with mock invoice data and persistence    |
+| Store Integration      | ✔      | Verified Pinia store works within `App.vue`                         |
+| Repo Structure         | ✔      | Monorepo confirmed (frontend + backend planned)                     |
 
-- Create and save invoices
-- Add clients, items, and taxes
-- Export invoices as PDFs
-- Track payment status (sent/paid)
-- Email invoices to clients
+---
 
-**Tech Stack**
+### 🧩 To-Do (MVP Scope)
+
+| Task                     | Description                                           | Priority  |
+| ------------------------ | ----------------------------------------------------- | --------- |
+| Invoice CRUD             | Create, edit, save invoices locally                   | 🔺 High   |
+| Client & Item Management | Add client list and invoice line items                | 🔺 High   |
+| Tax Handling             | Add per-item or per-invoice tax logic                 | 🔺 Medium |
+| PDF Export               | Integrate `html2pdf.js` for printable invoices        | 🔺 Medium |
+| Payment Status Tracking  | Mark invoices as _sent_ / _paid_ and store `datePaid` | 🔺 Medium |
+| Email Sending            | Enable sending invoices via email                     | 🔹 Low    |
+| UI/UX Styling            | Scoped component CSS and accessibility review         | 🔹 Low    |
+| Backend Setup            | Implement Express API with SQLite persistence         | 🔺 High   |
+| Deployment               | Configure GitHub Pages + Render / Railway             | 🔹 Low    |
+
+---
+
+### ⚖️ Outstanding Decisions
+
+| Topic            | Options                                                | Awaiting        |
+| ---------------- | ------------------------------------------------------ | --------------- |
+| Email Sending    | Frontend via **EmailJS** vs Backend via **nodemailer** | Decide post-MVP |
+| Authentication   | Add user accounts or skip for MVP                      | TBD             |
+| Data Persistence | Local SQLite file vs hosted DB (e.g., Supabase)        | TBD             |
+| State Storage    | Extend persisted Pinia state to backend sync           | TBD             |
+
+---
+
+### ⚙️ Tech Stack
 
 - **Frontend:** Vue 3 + Pinia + Vanilla CSS
 - **Backend:** Express.js + SQLite
@@ -26,52 +55,34 @@ Built with **Vue 3**, **Pinia**, **Express**, and **SQLite**, it focuses on clar
 
 ---
 
-## ✅ Project Progress Log
+## 📘 Change Log
 
-| Status | Task                        | Description                                    | Notes                        |
-| :----: | :-------------------------- | :--------------------------------------------- | :--------------------------- |
-|   ✅   | **Initialize GitHub repo**  | Created remote repo and cloned locally         | Name: `invoice-app`          |
-|   ✅   | **Set up folder structure** | Added `/server` and Vite-generated frontend    | Monorepo structure confirmed |
-|   🔜   | **Install Pinia**           | State management setup                         | Next step                    |
-|   ⏳   | **Set up Express backend**  | Create `/server/index.js` with basic API route | Planned soon                 |
-|   ⏳   | **Integrate SQLite**        | Create DB and `invoices` table                 | Post Express setup           |
-|   ⏳   | **Frontend Invoice form**   | Add form to create invoices                    | After backend ready          |
-|   ⏳   | **Connect FE/BE via Axios** | Send and fetch data                            |                              |
-|   ⏳   | **PDF export**              | Use html2pdf.js to export invoice              |                              |
-|   ⏳   | **Email invoices**          | Basic email sending (nodemailer or EmailJS)    | Stretch goal                 |
-|   ⏳   | **Deployment**              | Host FE on GitHub Pages, BE on Render          | Final step                   |
+### 🔄 Update: Initial Store Wiring + Enhancements
 
----
+**What Changed:**
 
-## ⚙️ Decisions Made
+- Created and wired up the `invoiceStore.js` using Pinia.
+- Integrated `pinia-plugin-persistedstate` for localStorage persistence.
+- Added two mock invoices for testing initial UI interactions.
+- Updated `App.vue` to read and modify invoice data via store.
+- Added new property `datePaid` to each invoice object (currently `null` for mock data).
 
-| Area           | Decision              | Notes                              |
-| -------------- | --------------------- | ---------------------------------- |
-| Repo Structure | Monorepo              | Frontend + backend in one project  |
-| Frontend       | Vue 3 + Vite + Pinia  | Pinia chosen for simplicity        |
-| Backend        | Express + SQLite      | Lightweight, ideal for learning    |
-| Styling        | Scoped Vanilla CSS    | Each component styled individually |
-| DB             | SQLite (file-based)   | Simplicity > scalability for now   |
-| Deployment     | GitHub Pages + Render | Good free-tier combo               |
+**Why It Changed:**
 
----
+- To confirm the frontend state management pipeline is functioning before moving to multi-component design.
+- `datePaid` was added to prepare for future functionality: tracking payment completion dates for each invoice.
 
-## ❓ Pending Decisions
+**Expected Effect:**
 
-| Topic            | Options                                             | Awaiting            |
-| ---------------- | --------------------------------------------------- | ------------------- |
-| Email Sending    | Frontend via EmailJS **vs** Backend via nodemailer  | To decide after MVP |
-| Authentication   | Add later or skip                                   | TBD                 |
-| Data Persistence | Local SQLite file **vs** hosted DB (e.g., Supabase) | TBD                 |
+- Invoices now persist between page reloads.
+- UI can add, remove, and mark invoices as paid (with logic to be expanded).
+- Structure ready for modular components (`InvoiceList.vue`, `InvoiceForm.vue`, etc.).
+
+**Next Step Related to This Change:**
+
+- Update `markAsPaid()` to automatically set `datePaid` to the current date.
+- Begin separating UI logic into dedicated components for readability and maintainability.
 
 ---
 
-## 🧩 Next Steps (Immediate)
-
-### Step 1️⃣ — Install and Set Up Pinia
-
-Run inside `/client`:
-
-```bash
-npm install pinia
-```
+_Last updated: 2025-10-07_

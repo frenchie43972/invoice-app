@@ -3,9 +3,10 @@ import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import App from './App.vue';
 
+const app = createApp(App);
 const pinia = createPinia();
 
 pinia.use(piniaPluginPersistedstate);
 
-App.use(pinia);
-createApp(App).mount('#app');
+app.use(pinia);
+app.mount('#app');
