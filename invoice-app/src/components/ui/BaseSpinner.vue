@@ -1,0 +1,41 @@
+<script setup>
+const props = defineProps({
+  size: {
+    type: String,
+    default: '48px', // Default Spinner Size
+  },
+  color: {
+    type: String,
+    default: '#3b3687', // Default Spinner Color
+  },
+  speed: {
+    type: String,
+    default: '1s', // Animation Speed
+  },
+});
+
+const spinnerStyle = computed(() => ({
+  width: props.size,
+  height: props.size,
+  border: `${parseInt(props.size) / 8}px solid rgba(0, 0, 0, 0.1)`,
+  borderTopColor: props.color,
+  animation: `spin ${props.speed} linear infinite`,
+}));
+</script>
+
+<template>
+  <div class="spinner" :style="spinnerStyle"></div>
+</template>
+
+<style scoped>
+.spinner {
+  border-radius: 50%;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
