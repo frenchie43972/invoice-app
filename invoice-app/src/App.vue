@@ -1,33 +1,26 @@
 <script setup>
-import { useInvoiceStore } from './stores/invoiceStore';
-
-const store = useInvoiceStore();
-
-function addTestInvoice() {
-  store.addInvoice({
-    client: 'New Client',
-    amount: 500,
-    dueDate: '2025-10-25',
-    status: 'Unpaid',
-  });
-}
+import InvoiceList from './components/invoices/InvoiceList.vue';
 </script>
 
 <template>
-  <div>
-    <h1>Welcome, Everyting is Fine!</h1>
-    <button @click="addTestInvoice">Add test Invoice</button>
-    <ul>
-      <li v-for="invoice in store.invoices" :key="invoice.id">
-        <strong>{{ invoice.client }}</strong> - ${{ invoice.amount }} -
-        {{ invoice.status }}
-        <button @click="store.markAsPaid(invoice.id)">Mark Paid</button>
-        <button @click="store.removeInvoice(invoice.id)">Remove</button>
-      </li>
-    </ul>
-
-    <p>Total Invoics: {{ store.totalInvoices }}</p>
-  </div>
+  <main>
+    <h1 class="title">MiniBill Invoiceing App</h1>
+    <InvoiceList />
+  </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+main {
+  padding: 2rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+.title {
+  text-align: center;
+  color: #3b3687;
+  margin-bottom: 2rem;
+}
+</style>

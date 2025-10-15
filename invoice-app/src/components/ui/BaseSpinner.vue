@@ -1,4 +1,6 @@
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
   size: {
     type: String,
@@ -27,7 +29,7 @@ const spinnerStyle = computed(() => ({
   <div class="spinner" :style="spinnerStyle"></div>
 </template>
 
-<style scoped>
+<style>
 .spinner {
   border-radius: 50%;
   display: inline-block;
