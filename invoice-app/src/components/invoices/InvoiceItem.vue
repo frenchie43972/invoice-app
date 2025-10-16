@@ -1,5 +1,5 @@
 <script setup>
-import { defineEmits, defineProps } from 'vue';
+import BaseButton from '../ui/BaseButton.vue';
 
 // Recieves invoice data from InvoiceList
 const props = defineProps({
@@ -10,14 +10,16 @@ const props = defineProps({
 });
 
 // Emits events to send back to InvoiceList
-const emit = defineEmits(['markPaid', 'removeInvoice']);
+const emit = defineEmits(['markAsPaid', 'removeInvoice']);
 
 // Trigger actions in InvoiceList
 function handleMarkPaid() {
-  emit('markPaid', props.invoice.id);
+  console.log('InvoiceItem => emit markPaid');
+  emit('markAsPaid', props.invoice.id);
 }
 
 function handleRemove() {
+  console.log('InvoiceItem => emit removeInvoice');
   emit('removeInvoice', props.invoice.id);
 }
 </script>
@@ -37,16 +39,25 @@ function handleRemove() {
     </div>
 
     <div class="actions">
-      <button
-        @click="
-          handleMarkPaid;
-          console.log('clicked');
-        "
-        :disabled="props.invoice.status === 'Paid'"
+      <BaseButton
+        variant="primary"
+        size="sm"
+        :disabled="invoice.status === 'Paid'"
+        aria-label="Mark invoice as paid"
+        @click="handleMarkPaid"
       >
         Mark Paid
-      </button>
-      <button @click="handleRemove" class="danger">Remove</button>
+      </BaseButton>
+      <BaseButton
+        variant="danger"
+        size="sm"
+        aria-label="Remove this invoice"
+        @click="handleRemove"
+      >
+        Remove
+      </BaseButton>
+
+      <BaseButton @click="console.log('clicked basebutton')">Test</BaseButton>
     </div>
   </li>
 </template>
@@ -72,23 +83,5 @@ function handleRemove() {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-}
-
-button {
-  background: #3b3687;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button.danger {
-  background: #dc2626;
-}
-
-button:disabled {
-  background: #9ca3af;
-  cursor: not-allowed;
 }
 </style>

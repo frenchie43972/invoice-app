@@ -9,29 +9,34 @@ Built with **Vue 3**, **Pinia**, **Express**, and **SQLite**, it focuses on clar
 
 ### ✅ Completed
 
-| Area                   | Status | Notes                                                               |
-| ---------------------- | ------ | ------------------------------------------------------------------- |
-| Project Initialization | ✔      | Vue 3 + Vite app scaffolded                                         |
-| State Management Setup | ✔      | Pinia initialized and configured with `pinia-plugin-persistedstate` |
-| Invoice Store          | ✔      | Created `invoiceStore.js` with mock invoice data and persistence    |
-| Store Integration      | ✔      | Verified Pinia store works within `App.vue`                         |
-| Repo Structure         | ✔      | Monorepo confirmed (frontend + backend planned)                     |
+| Area                   | Status | Notes                                                                |
+| ---------------------- | ------ | -------------------------------------------------------------------- |
+| Project Initialization | ✔      | Vue 3 + Vite app scaffolded                                          |
+| State Management Setup | ✔      | Pinia initialized with `pinia-plugin-persistedstate` for persistence |
+| Invoice Store          | ✔      | Created `invoiceStore.js` with mock invoice data and persistence     |
+| Store Integration      | ✔      | Verified Pinia store works within `App.vue`                          |
+| Spinner Component      | ✔      | `BaseSpinner.vue` built with accessible animation and reduced motion |
+| Invoice List Prototype | ✔      | Built `InvoiceList.vue` for CRUD testing and reactivity verification |
+| Invoice Item Component | ✔      | Extracted `InvoiceItem.vue` for cleaner, reusable invoice rendering  |
+| BaseButton Component   | ✔      | Added `BaseButton.vue` (variants, sizes, accessibility ready)        |
+| Event Propagation Test | ✔      | Verified `InvoiceItem → InvoiceList → Store` event pipeline working  |
+| Repo Structure         | ✔      | Monorepo confirmed (frontend + backend planned)                      |
 
 ---
 
 ### 🧩 To-Do (MVP Scope)
 
-| Task                     | Description                                           | Priority  |
-| ------------------------ | ----------------------------------------------------- | --------- |
-| Invoice CRUD             | Create, edit, save invoices locally                   | 🔺 High   |
-| Client & Item Management | Add client list and invoice line items                | 🔺 High   |
-| Tax Handling             | Add per-item or per-invoice tax logic                 | 🔺 Medium |
-| PDF Export               | Integrate `html2pdf.js` for printable invoices        | 🔺 Medium |
-| Payment Status Tracking  | Mark invoices as _sent_ / _paid_ and store `datePaid` | 🔺 Medium |
-| Email Sending            | Enable sending invoices via email                     | 🔹 Low    |
-| UI/UX Styling            | Scoped component CSS and accessibility review         | 🔹 Low    |
-| Backend Setup            | Implement Express API with SQLite persistence         | 🔺 High   |
-| Deployment               | Configure GitHub Pages + Render / Railway             | 🔹 Low    |
+| Task                     | Description                                            | Priority |
+| ------------------------ | ------------------------------------------------------ | -------- |
+| Invoice CRUD             | Create, edit, save invoices locally                    | 🔺 High  |
+| Client & Item Management | Add client list and invoice line items                 | 🔺 High  |
+| Tax Handling             | Add per-item or per-invoice tax logic                  | 🔺 Med   |
+| PDF Export               | Integrate `html2pdf.js` for printable invoices         | 🔺 Med   |
+| Payment Status Tracking  | Mark invoices as _sent_ / _paid_ / _unpaid_ with dates | 🔺 Med   |
+| Undo / Mark Unpaid       | Add “Undo” option to revert paid invoices              | 🔹 Low   |
+| UI/UX Styling            | Add `BaseCard.vue` + global theme variables            | 🔹 Low   |
+| Backend Setup            | Implement Express API with SQLite persistence          | 🔺 High  |
+| Deployment               | Configure GitHub Pages + Render / Railway              | 🔹 Low   |
 
 ---
 
@@ -86,3 +91,36 @@ Built with **Vue 3**, **Pinia**, **Express**, and **SQLite**, it focuses on clar
 ---
 
 _Last updated: 2025-10-07_
+
+---
+
+🔄 Update: Componentization + Accessibility Enhancements
+
+What Changed:
+
+- Extracted InvoiceItem.vue from InvoiceList.vue for modularity.
+- Added BaseButton.vue with prop-based variants, sizes, ARIA attributes, and keyboard focus styling.
+- Verified event propagation from child → parent → store.
+- Added reduced-motion handling and improved visual consistency.
+- Resolved reactivity and store state update edge cases.
+
+Why It Changed:
+
+- To make the component tree scalable and readable.
+- To improve accessibility, maintainability, and UI consistency.
+- To establish base UI components (BaseButton, BaseSpinner) for reuse across the app.
+
+Expected Effect:
+
+- Buttons and list items share consistent design and logic.
+- Store interactions are verified through clean event pipelines.
+- App ready for BaseCard.vue and InvoiceForm.vue integration next.
+
+Next Steps Related to This Change:
+
+- Build BaseCard.vue for consistent card-style layouts.
+- Create InvoiceForm.vue for adding/editing invoices.
+- Implement “Mark Unpaid” logic and refactor store toggle function.
+- Begin backend API setup (Express + SQLite).
+
+Last updated: 2025-10-16

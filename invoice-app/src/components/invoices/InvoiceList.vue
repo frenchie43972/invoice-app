@@ -16,10 +16,12 @@ onMounted(() => {
 
 // Actions
 function markAsPaid(id) {
+  console.log('InvoiceList → store.markAsPaid', id);
   store.markAsPaid(id);
 }
 
 function removeInvoice(id) {
+  console.log('InvoiceList → store.removeInvoice', id);
   store.removeInvoice(id);
 }
 </script>
