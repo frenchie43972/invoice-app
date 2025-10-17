@@ -18,7 +18,7 @@ export const useInvoiceStore = defineStore('invoice', {
         amount: 800,
         dueDate: '2025-10-20',
         status: 'Paid',
-        datePaid: null,
+        datePaid: '2025-10-22',
       },
     ],
   }),

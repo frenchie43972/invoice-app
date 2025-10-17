@@ -1,28 +1,31 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useInvoiceStore } from '../../stores/invoiceStore';
+import { useLoading } from '../../composables/useLoading';
 import BaseSpinner from '../../components/ui/BaseSpinner.vue';
 import InvoiceItem from './InvoiceItem.vue';
 
 const store = useInvoiceStore();
+const { loading, withLoading } = useLoading();
 
-// Simulated loading to demo the Spinner
-const loading = ref(false);
-
-onMounted(() => {
-  loading.value = true;
-  setTimeout(() => (loading.value = false), 1000);
+onMounted(async () => {
+  // Simulate fetch time only once for realism, can remove later
+  withLoading(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 800));
+  });
 });
 
 // Actions
-function markAsPaid(id) {
-  console.log('InvoiceList → store.markAsPaid', id);
-  store.markAsPaid(id);
+async function markAsPaid(id) {
+  await withLoading(async () => {
+    store.markAsPaid(id);
+  });
 }
 
-function removeInvoice(id) {
-  console.log('InvoiceList → store.removeInvoice', id);
-  store.removeInvoice(id);
+async function removeInvoice(id) {
+  await withLoading(async () => {
+    store.removeInvoice(id);
+  });
 }
 </script>
 
@@ -56,62 +59,28 @@ function removeInvoice(id) {
 <style scoped>
 .invoice-list {
   padding: 1.5rem;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
+/* Spinner alignment */
 .loading-container {
   display: flex;
   justify-content: center;
   padding: 2rem 0;
 }
 
+/* Responsive grid layout */
 .invoices {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.invoice-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.details p {
-  margin: 0.25rem 0;
-}
-
-.actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-button {
-  background: #3b3687;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button.danger {
-  background: #dc2626;
-}
-
-button:disabled {
-  background: #9ca3af;
-  cursor: not-allowed;
-}
-
+/* Empty state text */
 .empty {
   text-align: center;
   color: #6b7280;
