@@ -1,10 +1,12 @@
 <script setup>
 import InvoiceList from './components/invoices/InvoiceList.vue';
+import InvoiceForm from './components/invoices/InvoiceForm.vue';
 </script>
 
 <template>
   <main>
-    <h1 class="title">MiniBill Invoiceing App</h1>
+    <h1 class="title">MiniBill Invoicing App</h1>
+    <InvoiceForm />
     <InvoiceList />
   </main>
 </template>

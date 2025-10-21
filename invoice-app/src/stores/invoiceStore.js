@@ -42,7 +42,10 @@ export const useInvoiceStore = defineStore('invoice', {
     },
     markAsPaid(id) {
       const invoice = this.invoices.find((inv) => inv.id === id);
-      if (invoice) invoice.status = 'Paid';
+      if (invoice) {
+        invoice.status = 'Paid';
+        invoice.datePaid = new Date().toISOString().split('T'[0]);
+      }
     },
   },
 

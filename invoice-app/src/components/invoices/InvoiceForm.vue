@@ -2,12 +2,15 @@
 import { ref } from 'vue';
 import BaseButton from '../ui/BaseButton.vue';
 import BaseCard from '../ui/BaseCard.vue';
-// import BaseInput from '../ui/BaseInput.vue';
+import BaseInput from '../ui/BaseInput.vue';
 import { useInvoiceStore } from '../../stores/invoiceStore';
 import { useLoading } from '../../composables/useLoading';
 
 // Emits
 const emit = defineEmits(['submitted']);
+
+// Limits the date selection to today or later (cannot back date)
+const today = new Date().toISOString().split('T')[0];
 
 // State and dependencies
 const store = useInvoiceStore();
@@ -57,40 +60,34 @@ async function handleSubmit() {
     <form class="invoice-form" @submit.prevent="handleSubmit">
       <h3>Add Invoice</h3>
 
-      <div class="field">
-        <label for="client">Client</label>
-        <input
-          type="text"
-          id="client"
-          v-model="form.client"
-          :disabled="loading"
-          placeholder="placeholder text"
-        />
-        <small v-if="errors.client" class="error">{{ errors.client }}</small>
-      </div>
+      <BaseInput
+        id="client"
+        label="Client"
+        v-model="form.client"
+        placeholder="e.g Acme Corp"
+        :disabled="loading"
+        :error="errors.client"
+      />
 
-      <div class="field">
-        <label for="amount">Amount ($)</label>
-        <input
-          type="text"
-          id="amount"
-          v-model="form.amount"
-          :disabled="loading"
-          placeholder="placeholder amount"
-        />
-        <small v-if="errors.amount" class="error">{{ errors.amount }}</small>
-      </div>
+      <BaseInput
+        id="amount"
+        label="Amount"
+        type="number"
+        v-model="form.amount"
+        placeholder="e.g 1200"
+        :disabled="loading"
+        :error="errors.amount"
+      />
 
-      <div class="field">
-        <label for="dueDate">Due Date</label>
-        <input
-          type="text"
-          id="dueDate"
-          v-model="form.dueDate"
-          :disabled="loading"
-        />
-        <small v-if="errors.dueDate" class="error">{{ errors.dueDate }}</small>
-      </div>
+      <BaseInput
+        id="dueDate"
+        label="Due Date"
+        type="date"
+        v-model="form.dueDate"
+        :min="today"
+        :disabled="loading"
+        :error="errors.dueDate"
+      />
 
       <BaseButton
         variant="primary"
@@ -111,34 +108,6 @@ async function handleSubmit() {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-input {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  outline: none;
-}
-
-input:focus {
-  border-color: #3b3687;
-  box-shadow: 0 0 0 2px rgba(59, 54, 135, 0.2);
-}
-
-.error {
-  color: #dc2626;
-  font-size: 0.875rem;
 }
 
 button {
