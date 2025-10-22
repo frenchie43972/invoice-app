@@ -44,7 +44,7 @@ export const useInvoiceStore = defineStore('invoice', {
       const invoice = this.invoices.find((inv) => inv.id === id);
       if (invoice) {
         invoice.status = 'Paid';
-        invoice.datePaid = new Date().toISOString().split('T'[0]);
+        invoice.datePaid = new Date().toISOString().split('T')[0];
       }
     },
   },
