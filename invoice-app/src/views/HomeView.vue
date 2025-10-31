@@ -28,6 +28,7 @@ function goToRoute(routeName) {
 
 <template>
   <section class="home-section routes">
+    <hr />
     <h2>Quick Actions (replace with a better title)</h2>
     <nav class="route-buttons">
       <BaseButton
