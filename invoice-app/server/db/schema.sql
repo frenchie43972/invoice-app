@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS clients (
   company TEXT,
   is_active INTEGER NOT NULL DEFAULT 1 CHECK(is_active IN (0,1)), --0 = action 1 = inactive
   created_on TEXT NOT NULL DEFAULT (datetime('now')),
-  updated_on TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_on TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
 -- =========================================
