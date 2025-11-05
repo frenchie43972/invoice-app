@@ -14,4 +14,4 @@ app.use(router);
 app.mount('#app');
 
 // Temporary debug access for manual testing
-window.pinia = pinia;
+// window.pinia = pinia;
