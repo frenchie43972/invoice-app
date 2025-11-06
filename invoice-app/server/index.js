@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 
 import invoiceRoutes from './routes/invoices.js';
+import clientRoutes from './routes/clients.js';
 
 // Creates the express app instance
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/api/invoices', invoiceRoutes);
+app.use('/api/clients', clientRoutes);
 
 // Start the server
 // - Use PORT 5000 (common for API backends)
