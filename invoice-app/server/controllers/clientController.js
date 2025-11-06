@@ -100,7 +100,7 @@ export const updateClient = (req, res) => {
       phone = COALESCE(?, phone),
       company = COALESCE(?, company),
       is_active = COALESCE(?, is_active),
-      update_on = datetime('now')
+      updated_on = datetime('now')
     WHERE id = ?;
   `;
 
