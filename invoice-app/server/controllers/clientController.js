@@ -90,7 +90,7 @@ export const updateClient = (req, res) => {
   const { name, email, phone, company, is_active } = req.body;
 
   if (!id || isNaN(id))
-    return respond(res, 400, { error: 'Invailed client ID' });
+    return respond(res, 400, { error: 'Invalid client ID' });
 
   const sql = `
     UPDATE clients
