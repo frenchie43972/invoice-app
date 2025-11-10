@@ -11,7 +11,8 @@ pinia.use(piniaPluginPersistedstate);
 
 app.use(pinia);
 app.use(router);
-app.mount('#app');
 
 // Temporary debug access for manual testing
-// window.pinia = pinia;
+window.pinia = pinia;
+
+app.mount('#app');
