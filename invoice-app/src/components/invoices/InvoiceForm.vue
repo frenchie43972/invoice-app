@@ -18,7 +18,7 @@ const store = useInvoiceStore();
 const { loading, withLoading } = useLoading();
 
 // Reactive for data
-const form = ref({
+const invoiceForm = ref({
   client_id: '',
   amount: '',
   dueDate: '',
@@ -36,10 +36,11 @@ const errors = ref({});
 
 function validate() {
   const errs = {};
-  if (!form.value.client_id.trim()) errs.client_id = 'Client name is required.';
-  if (!form.value.amount || isNaN(form.value.amount))
+  if (!invoiceForm.value.client_id.trim())
+    errs.client_id = 'Client name is required.';
+  if (!invoiceForm.value.amount || isNaN(invoiceForm.value.amount))
     errs.amount = 'Amount must be a number.';
-  if (!form.value.dueDate) errs.dueDate = 'Due date is required.';
+  if (!invoiceForm.value.dueDate) errs.dueDate = 'Due date is required.';
   errors.value = errs;
   return Object.keys(errs).length === 0;
 }
@@ -49,15 +50,15 @@ async function handleSubmit() {
 
   await withLoading(async () => {
     store.addInvoice({
-      client: form.value.client_id,
-      amount: Number(form.value.amount),
-      dueDate: form.value.dueDate,
+      client: invoiceForm.value.client_id,
+      amount: Number(invoiceForm.value.amount),
+      dueDate: invoiceForm.value.dueDate,
       status: 'Unpaid',
       datePaid: null,
     });
 
-    // Resets the form
-    form.value = { client: '', amount: '', dueDate: '' };
+    // Resets the invoiceForm
+    invoiceForm.value = { client: '', amount: '', dueDate: '' };
     emit('submitted');
   });
 }
@@ -72,7 +73,7 @@ async function handleSubmit() {
         id="client"
         label="Client"
         :options="clients"
-        v-model="form.client_id"
+        v-model="invoiceForm.client_id"
         :error="errors.client_id"
       />
 
@@ -80,7 +81,7 @@ async function handleSubmit() {
         id="amount"
         label="Amount"
         type="number"
-        v-model="form.amount"
+        v-model="invoiceForm.amount"
         placeholder="e.g 1200"
         :disabled="loading"
         :error="errors.amount"
@@ -90,7 +91,7 @@ async function handleSubmit() {
         id="dueDate"
         label="Due Date"
         type="date"
-        v-model="form.dueDate"
+        v-model="invoiceForm.dueDate"
         :min="today"
         :disabled="loading"
         :error="errors.dueDate"

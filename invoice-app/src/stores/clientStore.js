@@ -65,7 +65,7 @@ export const useClientStore = defineStore('client', {
     async updateClient(id, updateData) {
       try {
         await this._handleRequest(
-          fetch(`{API_URL}/${id}`, {
+          fetch(`${API_URL}/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updateData),
@@ -84,16 +84,16 @@ export const useClientStore = defineStore('client', {
         await this._handleRequest(
           fetch(`${API_URL}/${id}`, {
             method: 'DELETE',
-          })
+          }),
+          'removeClient Failed'
         );
 
         // Updates the local state so no refresh needed
         this.clients = this.clients.filter((c) => c.id !== id);
       } catch (error) {}
     },
-
-    persist: {
-      paths: ['clients'],
-    },
+  },
+  persist: {
+    paths: ['clients'],
   },
 });

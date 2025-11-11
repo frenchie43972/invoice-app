@@ -9,16 +9,13 @@ const store = useInvoiceStore();
 const { loading, withLoading } = useLoading();
 
 onMounted(async () => {
-  // Simulate fetch time only once for realism, can remove later
-  withLoading(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 800));
-  });
+  await store.fetchInvoices();
 });
 
 // Actions
 async function markAsPaid(id) {
   await withLoading(async () => {
-    store.markAsPaid(id);
+    await store.markAsPaid(id);
   });
 }
 

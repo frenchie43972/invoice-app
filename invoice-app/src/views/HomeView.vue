@@ -7,6 +7,8 @@ import { useInvoiceStore } from '../stores/invoiceStore';
 import BaseCard from '../components/ui/BaseCard.vue';
 import BaseButton from '../components/ui/BaseButton.vue';
 
+import ClientForm from '../components/clients/ClientForm.vue';
+
 const router = useRouter();
 
 const store = useInvoiceStore();
@@ -28,6 +30,7 @@ function goToRoute(routeName) {
 
 <template>
   <section class="home-section routes">
+    <ClientForm />
     <hr />
     <h2>Quick Actions (replace with a better title)</h2>
     <nav class="route-buttons">

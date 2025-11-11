@@ -24,13 +24,13 @@ function handleRemove() {
 </script>
 
 <template>
-  <li class="invoice-item">
+  <li class="invoice-item" role="listitem">
     <BaseCard>
       <div class="details">
         <h3>
           {{ invoice.client }}
         </h3>
-        <p>Amount: ${{ invoice.amount }}</p>
+        <p>Amount: ${{ (invoice.amount_cents / 100).toFixed(2) }}</p>
         <p>
           Status: <strong>{{ invoice.status }}</strong>
         </p>
