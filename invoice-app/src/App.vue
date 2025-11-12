@@ -2,7 +2,7 @@
 
 <template>
   <main>
-    <h1 class="title">MiniBill Invoicing App</h1>
+    <h1 class="title">MiniBill Invoicing</h1>
     <router-view />
   </main>
 </template>

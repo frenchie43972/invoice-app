@@ -54,7 +54,7 @@ function handleRemove() {
           aria-label="Remove Client"
           @click="handleRemove"
         >
-          Edit
+          Delete
         </BaseButton>
       </div>
     </BaseCard>

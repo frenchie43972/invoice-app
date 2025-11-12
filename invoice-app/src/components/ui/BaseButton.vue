@@ -73,11 +73,11 @@ const buttonClasses = computed(() => [
 }
 
 .variant-secondary {
-  background-color: #e5e7eb;
+  background-color: #52df88;
   color: #111827;
 }
 .variant-secondary:hover:not(:disabled) {
-  background-color: #d1d5db;
+  background-color: #58c281;
 }
 
 .variant-danger {
@@ -91,7 +91,7 @@ const buttonClasses = computed(() => [
 /* --- Sizes --- */
 .size-sm {
   padding: 0.25rem 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 .size-md {
   padding: 0.5rem 1rem;
