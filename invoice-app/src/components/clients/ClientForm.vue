@@ -2,16 +2,15 @@
 import { ref } from 'vue';
 
 import { useClientStore } from '../../stores/clientStore.js';
-import { useLoading } from '../../composables/useLoading';
 
 import BaseButton from '../ui/BaseButton.vue';
 import BaseCard from '../ui/BaseCard.vue';
 import BaseInput from '../ui/BaseInput.vue';
+import BaseSpinner from '../ui/BaseSpinner.vue';
 
 const emit = defineEmits(['submitted']);
 
 const store = useClientStore();
-const { loading, withLoading } = useLoading();
 
 const clientForm = ref({
   name: '',
@@ -45,19 +44,17 @@ function validate() {
 async function handleSubmit() {
   if (!validate()) return;
 
-  await withLoading(async () => {
-    await store.addClient({ ...clientForm.value });
+  await store.addClient({ ...clientForm.value });
 
-    clientForm.value = {
-      name: '',
-      email: '',
-      phone: '',
-      company: '',
-      is_active: 1,
-    };
+  clientForm.value = {
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    is_active: 1,
+  };
 
-    emit('submitted');
-  });
+  emit('submitted');
 }
 </script>
 
@@ -72,7 +69,7 @@ async function handleSubmit() {
         v-model="clientForm.name"
         :error="errors.name"
         placeholder="Client full name"
-        :disabled="loading"
+        :disabled="store.loading"
       />
 
       <BaseInput
@@ -81,7 +78,7 @@ async function handleSubmit() {
         v-model="clientForm.email"
         :error="errors.email"
         placeholder="email@example.com"
-        :disabled="loading"
+        :disabled="store.loading"
       />
 
       <BaseInput
@@ -90,7 +87,7 @@ async function handleSubmit() {
         v-model="clientForm.phone"
         :error="errors.phone"
         placeholder="555-123-4567"
-        :disabled="loading"
+        :disabled="store.loading"
       />
 
       <BaseInput
@@ -99,12 +96,18 @@ async function handleSubmit() {
         v-model="clientForm.company"
         :error="errors.company"
         placeholder="Company name"
-        :disabled="loading"
+        :disabled="store.loading"
       />
 
-      <BaseButton type="submit" variant="primary" size="md" :disabled="loading">
-        <span v-if="!loading">Add Client</span>
-        <span v-else>Saving...</span>
+      <BaseButton
+        variant="primary"
+        size="md"
+        type="submit"
+        :disabled="store.loading"
+        aria-label="Add client"
+      >
+        <BaseSpinner v-if="store.loading" size="20px" color="#fff" />
+        <span v-else>Add Client</span>
       </BaseButton>
     </form>
   </BaseCard>

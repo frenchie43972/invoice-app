@@ -19,14 +19,20 @@ const props = defineProps({
 const spinnerStyle = computed(() => ({
   width: props.size,
   height: props.size,
-  border: `${parseInt(props.size) / 8}px solid rgba(0, 0, 0, 0.1)`,
+  // Prevents fractional borders which can look blurry on on some screens
+  border: `${Math.round(parseInt(props.size) / 8)}px solid rgba(0, 0, 0, 0.1)`,
   borderTopColor: props.color,
   animation: `spin ${props.speed} linear infinite`,
 }));
 </script>
 
 <template>
-  <div class="spinner" :style="spinnerStyle"></div>
+  <div
+    class="spinner"
+    :style="spinnerStyle"
+    role="status"
+    aria-label="Loading"
+  ></div>
 </template>
 
 <style>

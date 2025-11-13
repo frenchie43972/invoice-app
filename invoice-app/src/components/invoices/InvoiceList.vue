@@ -1,12 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useInvoiceStore } from '../../stores/invoiceStore';
-import { useLoading } from '../../composables/useLoading';
+
 import BaseSpinner from '../../components/ui/BaseSpinner.vue';
 import InvoiceItem from './InvoiceItem.vue';
 
 const store = useInvoiceStore();
-const { loading, withLoading } = useLoading();
 
 onMounted(async () => {
   await store.fetchInvoices();
@@ -14,15 +13,11 @@ onMounted(async () => {
 
 // Actions
 async function markAsPaid(id) {
-  await withLoading(async () => {
-    await store.markAsPaid(id);
-  });
+  await store.markAsPaid(id);
 }
 
 async function removeInvoice(id) {
-  await withLoading(async () => {
-    store.removeInvoice(id);
-  });
+  await store.removeInvoice(id);
 }
 </script>
 
@@ -30,8 +25,8 @@ async function removeInvoice(id) {
   <section class="invoice-list">
     <h2>Invoices</h2>
 
-    <!-- Loading State -->
-    <div v-if="loading" class="loading-container">
+    <!-- Loading State (Spinner while fetching data) -->
+    <div v-if="store.loading" class="loading-container">
       <BaseSpinner size="64px" />
     </div>
 

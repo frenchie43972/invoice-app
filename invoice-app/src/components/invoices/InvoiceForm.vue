@@ -1,11 +1,12 @@
 <script setup>
 import { ref } from 'vue';
+import { useInvoiceStore } from '../../stores/invoiceStore';
+
 import BaseButton from '../ui/BaseButton.vue';
 import BaseCard from '../ui/BaseCard.vue';
 import BaseInput from '../ui/BaseInput.vue';
 import BaseSelect from '../ui/BaseSelect.vue';
-import { useInvoiceStore } from '../../stores/invoiceStore';
-import { useLoading } from '../../composables/useLoading';
+import BaseSpinner from '../ui/BaseSpinner.vue';
 
 // Emits
 const emit = defineEmits(['submitted']);
@@ -15,7 +16,6 @@ const today = new Date().toISOString().split('T')[0];
 
 // State and dependencies
 const store = useInvoiceStore();
-const { loading, withLoading } = useLoading();
 
 // Reactive for data
 const invoiceForm = ref({
@@ -48,19 +48,17 @@ function validate() {
 async function handleSubmit() {
   if (!validate()) return;
 
-  await withLoading(async () => {
-    store.addInvoice({
-      client: invoiceForm.value.client_id,
-      amount: Number(invoiceForm.value.amount),
-      dueDate: invoiceForm.value.dueDate,
-      status: 'Unpaid',
-      datePaid: null,
-    });
-
-    // Resets the invoiceForm
-    invoiceForm.value = { client: '', amount: '', dueDate: '' };
-    emit('submitted');
+  await store.addInvoice({
+    client: invoiceForm.value.client_id,
+    amount: Number(invoiceForm.value.amount),
+    dueDate: invoiceForm.value.dueDate,
+    status: 'Unpaid',
+    date_paid: null,
   });
+
+  // Resets the invoiceForm
+  invoiceForm.value = { client: '', amount: '', dueDate: '' };
+  emit('submitted');
 }
 </script>
 
@@ -83,7 +81,7 @@ async function handleSubmit() {
         type="number"
         v-model="invoiceForm.amount"
         placeholder="e.g 1200"
-        :disabled="loading"
+        :disabled="store.loading"
         :error="errors.amount"
       />
 
@@ -93,7 +91,7 @@ async function handleSubmit() {
         type="date"
         v-model="invoiceForm.dueDate"
         :min="today"
-        :disabled="loading"
+        :disabled="store.loading"
         :error="errors.dueDate"
       />
 
@@ -101,11 +99,11 @@ async function handleSubmit() {
         variant="primary"
         size="md"
         type="submit"
-        :disabled="loading"
+        :disabled="store.loading"
         aria-label="Add invoice"
       >
-        <span v-if="!loading">Add Invoice</span>
-        <span v-else>Saving...</span>
+        <BaseSpinner v-if="store.loading" size="20px" color="#fff" />
+        <span v-else>Add Invoice</span>
       </BaseButton>
     </form>
   </BaseCard>

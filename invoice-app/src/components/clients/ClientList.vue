@@ -1,12 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useClientStore } from '../../stores/clientStore';
-import { useLoading } from '../../composables/useLoading';
 import BaseSpinner from '../ui/BaseSpinner.vue';
 import Client from './Clients.vue';
 
 const store = useClientStore();
-const { loading, withLoading } = useLoading();
 
 // Loads all clients on mount
 onMounted(async () => {
@@ -15,16 +13,12 @@ onMounted(async () => {
 
 // Handlers Section - Remove Client and Edit Clients (Add more later if needed)
 async function removeClient(id) {
-  await withLoading(async () => {
-    await store.removeClient(id);
-  });
+  await store.removeClient(id);
 }
 
 // Stubbed to implement later
 async function editClient(client) {
-  // await withLoading(async () => {
-  //   await store.updateClient(client.id, client);
-  // });
+  await store.updateClient(client.id, client);
 
   console.log('Edit client not implemented yet.', client);
 }
@@ -35,7 +29,7 @@ async function editClient(client) {
     <h2>Clients (Rename later)</h2>
 
     <!-- If Clients are loading the spinner component activates -->
-    <div v-if="loading" class="loading-spinner">
+    <div v-if="store.loading" class="loading-spinner">
       <BaseSpinner size="64px" />
     </div>
 

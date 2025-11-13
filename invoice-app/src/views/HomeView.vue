@@ -6,6 +6,7 @@ import { useInvoiceStore } from '../stores/invoiceStore';
 
 import BaseCard from '../components/ui/BaseCard.vue';
 import BaseButton from '../components/ui/BaseButton.vue';
+import BaseSpinner from '../components/ui/BaseSpinner.vue';
 
 const router = useRouter();
 
@@ -70,7 +71,12 @@ function goToRoute(routeName) {
   </section>
   <hr />
   <section class="home-section dashboard-section">
-    <div class="dashboard-cards">
+    <!-- Loading State (Spinner while fetching data) -->
+    <div v-if="store.loading" class="loading-container">
+      <BaseSpinner size="64px" />
+    </div>
+
+    <div v-else class="dashboard-cards">
       <BaseCard class="dashboard-card">
         <h3>Total Invoices</h3>
         <p>{{ totalInvoices }}</p>
@@ -151,5 +157,12 @@ hr {
   font-size: 1.5rem;
   font-weight: bold;
   color: #2b2b2b;
+}
+
+/* Spinner alignment */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
 }
 </style>
